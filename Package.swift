@@ -14,7 +14,6 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.1.1"),
         .package(url: "https://github.com/phimage/Erik.git", from: "5.1.0"),
         .package(url: "https://github.com/scinfu/SwiftSoup", from: "2.3.8")
     ],
@@ -24,7 +23,6 @@ let package = Package(
         .target(
             name: "CifraClubChords",
             dependencies: [
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "Erik", package: "Erik"),
                 .product(name: "SwiftSoup", package: "SwiftSoup")
             ]),

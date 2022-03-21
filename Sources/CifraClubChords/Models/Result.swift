@@ -19,6 +19,6 @@ class Result {
     }
     
     func fromHtml(htmlData: SwiftSoup.Element) {
-        try htmlData.getElementsByClass("gs-title")
+//        try htmlData.getElementsByClass("gs-title")
     }
 }
