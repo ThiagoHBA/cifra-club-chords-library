@@ -29,7 +29,7 @@ class CifraClubChords {
                     document: SwiftSoup.parse(htmlData!)
                 )!
             
-//                NSWorkspace.shared.open(URL(string: self.addURLParameters(urlString: firstResultUrl))!)
+                NSWorkspace.shared.open(URL(string: self.addURLParameters(urlString: firstResultUrl))!)
 
                 exit(0)
             }
