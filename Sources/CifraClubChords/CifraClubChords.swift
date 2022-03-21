@@ -28,9 +28,7 @@ class CifraClubChords {
                 let firstResultUrl = try! self.getFirstResultCifraClub(
                     document: SwiftSoup.parse(htmlData!)
                 )!
-                
-                print(firstResultUrl)
-
+            
 //                NSWorkspace.shared.open(URL(string: self.addURLParameters(urlString: firstResultUrl))!)
 
                 exit(0)
@@ -57,15 +55,15 @@ class CifraClubChords {
         while results.count > resultIndex {
             let resultLink = try results[resultIndex].getElementsByClass("gs-title")
             guard let resultUrl = try resultLink.first()?.select("a").first()?.attr("href") else {return nil}  //TODO throw error
-
-            if validateSong(songUrl: resultUrl) {
-//                break
+            
+            if try! validateSong(songUrl: resultUrl) {
+                return resultUrl
             }
             
             resultIndex += 1
         }
 
-        return ""
+        return nil
         
     }
 
@@ -92,8 +90,15 @@ class CifraClubChords {
         return modifiedUrl + "&footerChords=\(self.footerChords)&tabs=\(self.tabs)"
     }
     
-    func validateSong(songUrl: String) -> Bool {
-        print(songUrl)
-        return true
+    func validateSong(songUrl: String) throws -> Bool {
+        do {
+            let content = try String(contentsOf:URL(string: songUrl)!)
+            let urlDocument : SwiftSoup.Document = try! SwiftSoup.parse(content)
+            
+            return (try? urlDocument.getElementsByClass("cifra_cnt g-fix cifra-mono").first()) != nil
+        }
+        catch{
+            throw URLException.cannotLoad
+        }
     }
 }
