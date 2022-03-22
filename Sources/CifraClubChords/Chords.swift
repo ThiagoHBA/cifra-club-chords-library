@@ -11,7 +11,7 @@ public class Chords {
     var bodyDiagrams: Bool
     var footerChords: Bool
     
-    init(musicName: String, tabs: Bool, twoColumns: Bool, bodyDiagrams: Bool, footerChords: Bool) {
+    public init(musicName: String, tabs: Bool, twoColumns: Bool, bodyDiagrams: Bool, footerChords: Bool) {
         self.musicName = musicName
         self.tabs = tabs
         self.twoColumns = twoColumns
@@ -20,7 +20,7 @@ public class Chords {
         self.originUrl = "https://www.cifraclub.com.br"
     }
     
-    func searchMusic() {
+    public func searchMusic() {
         obtainHtmlData(url: obtainMusicSearchUrl(musicName: self.musicName), completion: {
             (success, htmlData) in
             if success {
@@ -51,6 +51,8 @@ public class Chords {
         var resultIndex: Int = 0
         
         let results = try document.getElementsByClass("gsc-webResult gsc-result")
+        
+        print(results[0])
         
         while results.count > resultIndex {
             let resultLink = try results[resultIndex].getElementsByClass("gs-title")

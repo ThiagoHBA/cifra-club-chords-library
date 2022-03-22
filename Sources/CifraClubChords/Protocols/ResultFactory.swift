@@ -9,5 +9,5 @@ import Foundation
 import SwiftSoup
 
 protocol ResultFactory {
-    func fromHtml(htmlData: SwiftSoup.Element) -> Result
+    static func fromHtml(_ htmlData: SwiftSoup.Element) throws -> Result
 }

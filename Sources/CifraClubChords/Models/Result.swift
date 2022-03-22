@@ -8,9 +8,7 @@
 import Foundation
 import SwiftSoup
 
-
 class Result : ResultFactory {
-    
     var title: String
     var link: URL
     
@@ -19,14 +17,15 @@ class Result : ResultFactory {
         self.link = link
     }
     
-    func fromHtml(htmlData: SwiftSoup.Element) throws -> Result {
+    static func fromHtml(_ htmlData: Element) -> Result {
         do{
-            let resultData = try htmlData.getElementsByClass("gs-title")
+            let resultData = try! htmlData.getElementsByClass("gs-title")
             
             return Result(
                 title: "", link: URL(string: "")!
             )
         }
-
     }
+    
+    
 }
