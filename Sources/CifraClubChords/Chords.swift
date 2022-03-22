@@ -42,6 +42,7 @@ public class Chords {
             if let e = error {
                 completion(false, String(describing: e))
             } else if let doc = object {
+                print("DOCUMENT \(object)")
                 completion(true, String(describing: doc))
             }
         }
@@ -51,8 +52,6 @@ public class Chords {
         var resultIndex: Int = 0
         
         let results = try document.getElementsByClass("gsc-webResult gsc-result")
-        
-        print(String(describing: results))
         
         while results.count > resultIndex {
             let resultLink = try results[resultIndex].getElementsByClass("gs-title")
