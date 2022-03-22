@@ -52,7 +52,7 @@ public class Chords {
         
         let results = try document.getElementsByClass("gsc-webResult gsc-result")
         
-        print(results[0])
+        print(String(describing: results))
         
         while results.count > resultIndex {
             let resultLink = try results[resultIndex].getElementsByClass("gs-title")

@@ -9,23 +9,25 @@ import Foundation
 import SwiftSoup
 
 class Result : ResultFactory {
-    var title: String
     var link: URL
     
-    init(title: String, link: URL) {
-        self.title = title
+    init(link: URL) {
         self.link = link
     }
     
-    static func fromHtml(_ htmlData: Element) -> Result {
-        do{
-            let resultData = try! htmlData.getElementsByClass("gs-title")
+    static func fromHtml(_ htmlData: Element) throws -> Result {
+            guard let resultData : Element = try htmlData.getElementsByClass("gs-title").first() else {
+                throw URLException.contentNotFound
+            }
+        
+            guard let resultUrl = try resultData.select("a").first()?.attr("href") else {
+                throw URLException.contentNotFound
+            }
+        
             
-            return Result(
-                title: "", link: URL(string: "")!
+            return Result (
+                link: URL(string: resultUrl)!
             )
-        }
+
     }
-    
-    
 }

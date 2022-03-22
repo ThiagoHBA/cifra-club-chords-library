@@ -14,16 +14,33 @@ class ResultTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        htmlData = try! SwiftSoup.parse("")
+        htmlData = try! SwiftSoup.parse(Mocks.mockHtmlStringResult)
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func test_resultFromHtml_toBeInvalid() {
-        let result = Result.fromHtml(htmlData)
+    func test_resultFromHtml_toBeValid() {
+        guard let result = try? Result.fromHtml(htmlData) else {
+            XCTFail()
+            exit(0)
+        }
         
+        XCTAssertEqual(result.link, URL(string: "https://www.cifraclub.com.br/madonna/")!)
     }
+    
+    func test_resultFromHtml_toBeInvalid() {
+        do{
+            let _ = try Result.fromHtml(SwiftSoup.parse(""))
+            XCTFail()
+            exit(0)
+        } catch URLException.contentNotFound {}
+         catch{
+            XCTFail()
+            exit(0)
+        }
+    }
+    
 
 }
