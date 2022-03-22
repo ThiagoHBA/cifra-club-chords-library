@@ -42,7 +42,6 @@ public class Chords {
             if let e = error {
                 completion(false, String(describing: e))
             } else if let doc = object {
-                print("DOCUMENT \(object)")
                 completion(true, String(describing: doc))
             }
         }
@@ -50,22 +49,20 @@ public class Chords {
 
     func getFirstResultCifraClub(document: SwiftSoup.Document) throws -> String? {
         var resultIndex: Int = 0
+        let htmlResults : HtmlResultModel = try HtmlResultModel.fromHtml(document)
         
-        let results = try document.getElementsByClass("gsc-webResult gsc-result")
-        
-        while results.count > resultIndex {
-            let resultLink = try results[resultIndex].getElementsByClass("gs-title")
-            guard let resultUrl = try resultLink.first()?.select("a").first()?.attr("href") else {return nil}  //TODO throw error
+        while htmlResults.listSingleHtmlResults.count > resultIndex {
+            let actualResult : SingleHtmlResult = htmlResults.listSingleHtmlResults[resultIndex]
+            let resultContent = try String(contentsOf: actualResult.link)
             
-            if try! validateSong(songUrl: resultUrl) {
-                return resultUrl
+            if validateSong(urlContent: resultContent) {
+                return String(describing: actualResult.link)
             }
             
             resultIndex += 1
         }
 
         return nil
-        
     }
 
     func obtainMusicSearchUrl(musicName: String) -> String {
@@ -91,15 +88,8 @@ public class Chords {
         return modifiedUrl + "&footerChords=\(self.footerChords)&tabs=\(self.tabs)"
     }
     
-    func validateSong(songUrl: String) throws -> Bool {
-        do {
-            let content = try String(contentsOf:URL(string: songUrl)!)
-            let urlDocument : SwiftSoup.Document = try! SwiftSoup.parse(content)
-            
-            return (try? urlDocument.getElementsByClass("cifra_cnt g-fix cifra-mono").first()) != nil
-        }
-        catch{
-            throw URLException.cannotLoad
-        }
+    func validateSong(urlContent: String) -> Bool {
+        let urlDocument : SwiftSoup.Document = try! SwiftSoup.parse(urlContent)
+        return (try? urlDocument.getElementsByClass("cifra_cnt g-fix cifra-mono").first()) != nil
     }
 }

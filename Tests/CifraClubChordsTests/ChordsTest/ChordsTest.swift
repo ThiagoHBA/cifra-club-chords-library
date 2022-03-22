@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import SwiftSoup
 @testable import CifraClubChords
 
 class ChordsTest: XCTestCase {
@@ -26,15 +27,14 @@ class ChordsTest: XCTestCase {
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
+    func test_chordsResultFind_toBeAMusic() {
+        let resultUrl = try! chordsClass.getFirstResultCifraClub(document: try! SwiftSoup.parse(Mocks.htmlStringSearchResult))
     
-    func test_chordsResultFinder_toBeAMusic() {
-        chordsClass.obtainHtmlData(url: "https://www.cifraclub.com.br/?q=madonna#gsc.tab=0&gsc.q=madonna&gsc.page=1", completion: {
-            success, htmlData in
-            if success {
-                print(htmlData)
-            }
-        }
-    )
+        XCTAssertNotEqual(resultUrl, "https://www.cifraclub.com.br/madonna/")
     }
+    
+//    func test_chordsResultFinder_toBeTheFirstResult() {
+//        let resultUrl = chordsClass.validateSong(urlContent: "")
+//    }
 
 }

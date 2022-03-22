@@ -22,7 +22,7 @@ class ResultTests: XCTestCase {
     }
 
     func test_resultFromHtml_toBeValid() {
-        guard let result = try? Result.fromHtml(htmlData) else {
+        guard let result = try? SingleHtmlResult.fromHtml(htmlData) else {
             XCTFail()
             exit(0)
         }
@@ -32,7 +32,7 @@ class ResultTests: XCTestCase {
     
     func test_resultFromHtml_toBeInvalid() {
         do{
-            let _ = try Result.fromHtml(SwiftSoup.parse(""))
+            let _ = try HtmlResultModel.fromHtml(SwiftSoup.parse(""))
             XCTFail()
             exit(0)
         } catch URLException.contentNotFound {}

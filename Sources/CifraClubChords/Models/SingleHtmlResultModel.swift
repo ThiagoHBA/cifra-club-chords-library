@@ -2,20 +2,20 @@
 //  File.swift
 //  
 //
-//  Created by Thiago Henrique on 21/03/22.
+//  Created by Thiago Henrique on 22/03/22.
 //
 
 import Foundation
 import SwiftSoup
 
-class Result : ResultFactory {
+class SingleHtmlResult : HtmlResultFactory {
     var link: URL
     
     init(link: URL) {
         self.link = link
     }
     
-    static func fromHtml(_ htmlData: Element) throws -> Result {
+    static func fromHtml(_ htmlData: Element) throws -> SingleHtmlResult {
             guard let resultData : Element = try htmlData.getElementsByClass("gs-title").first() else {
                 throw URLException.contentNotFound
             }
@@ -24,10 +24,10 @@ class Result : ResultFactory {
                 throw URLException.contentNotFound
             }
         
-            
-            return Result (
+            return SingleHtmlResult (
                 link: URL(string: resultUrl)!
             )
 
     }
 }
+

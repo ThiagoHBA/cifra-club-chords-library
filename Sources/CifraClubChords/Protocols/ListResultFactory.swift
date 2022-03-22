@@ -8,6 +8,6 @@
 import Foundation
 import SwiftSoup
 
-protocol HtmlResultFactory {
-    static func fromHtml(_ htmlData: SwiftSoup.Element) throws -> SingleHtmlResult
+protocol ListResultFactory {
+    static func fromHtml(_ htmlData: SwiftSoup.Document) throws -> HtmlResultModel
 }
