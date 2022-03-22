@@ -3,7 +3,7 @@ import Erik
 import SwiftSoup
 import Cocoa
 
-public class CifraClubChordsModel {
+public class Chords {
     private(set) var originUrl : String
     var musicName: String
     var tabs: Bool
