@@ -18,11 +18,11 @@ class HtmlResultModel : ListResultFactory {
     
     static func fromHtml(_ htmlData: Document) throws -> HtmlResultModel {
         let resultHtml = try htmlData.getElementsByClass("gsc-webResult gsc-result")
-        var resultList : [SingleHtmlResult]!
+        var resultList : [SingleHtmlResult] = []
         
         if resultHtml.count > 0 {
-            for result in 1...resultHtml.count {
-                resultList.append(try SingleHtmlResult.fromHtml(resultHtml[result]))
+            for singleResult in resultHtml {
+                resultList.append(try SingleHtmlResult.fromHtml(singleResult))
             }
         }
         
