@@ -9,7 +9,7 @@ import Foundation
 import SwiftSoup
 
 
-class HtmlResultModel : ListResultFactory {
+class HtmlResultModel {
     var listSingleHtmlResults : [SingleHtmlResult]
     
     init(listSingleHtmlResults: [SingleHtmlResult]){
@@ -24,9 +24,10 @@ class HtmlResultModel : ListResultFactory {
             for singleResult in resultHtml {
                 resultList.append(try SingleHtmlResult.fromHtml(singleResult))
             }
+            return HtmlResultModel(listSingleHtmlResults: resultList)
         }
         
-        return HtmlResultModel(listSingleHtmlResults: resultList)
+        throw URLException.contentNotFound
     }
 }
 

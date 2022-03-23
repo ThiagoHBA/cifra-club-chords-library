@@ -7,16 +7,14 @@ public class Chords {
     private(set) var originUrl : String
     var musicName: String
     var tabs: Bool
-    var twoColumns: Bool
-    var bodyDiagrams: Bool
+    var key: String?
     var footerChords: Bool
     
-    public init(musicName: String, tabs: Bool, twoColumns: Bool, bodyDiagrams: Bool, footerChords: Bool) {
+    public init(musicName: String, tabs: Bool, key: String?, footerChords: Bool) {
         self.musicName = musicName
         self.tabs = tabs
-        self.twoColumns = twoColumns
-        self.bodyDiagrams = bodyDiagrams
         self.footerChords = footerChords
+        self.key = key
         self.originUrl = "https://www.cifraclub.com.br"
     }
     
@@ -77,14 +75,12 @@ public class Chords {
     func addURLParameters(urlString: String) -> String {
         var modifiedUrl : String = urlString + "#"
         
-        if(self.bodyDiagrams || self.twoColumns){
-            if(twoColumns){
-                modifiedUrl += "columns=\(self.twoColumns)" + (self.bodyDiagrams ? "&" : "")
-            }else if(bodyDiagrams){
-                modifiedUrl += "bodyChords=\(self.bodyDiagrams)"
+        if self.key != nil {
+            if let key : Keys = Keys.stringToKey(value: self.key!.lowercased()) {
+                modifiedUrl += "key=\(key.rawValue)"
             }
         }
-        
+
         return modifiedUrl + "&footerChords=\(self.footerChords)&tabs=\(self.tabs)"
     }
     
