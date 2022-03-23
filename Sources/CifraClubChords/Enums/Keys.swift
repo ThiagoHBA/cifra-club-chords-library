@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Keys : Int {
+enum Keys : Int, CaseIterable {
     case A = 0
     case Bb = 1
     case B = 2
@@ -21,23 +21,41 @@ enum Keys : Int {
     case G = 10
     case Ab = 11
     
+    var stringValue: String {
+        switch self {
+        case .A:
+            return "a"
+        case .Bb:
+            return "bb"
+        case .B:
+            return "b"
+        case .C:
+            return "c"
+        case .Db:
+            return "db"
+        case .D:
+            return "d"
+        case .Eb:
+            return "eb"
+        case .E:
+            return "e"
+        case .F:
+            return "f"
+        case .Gb:
+            return "gb"
+        case .G:
+            return "b"
+        case .Ab:
+            return "ab"
+        }
+    }
+    
     static func stringToKey(value: String) -> Keys? {
-        let keyDict = [
-            "a": Keys.A,
-            "bb": Keys.Bb,
-            "b": Keys.B,
-            "c": Keys.C,
-            "db": Keys.Db,
-            "d": Keys.D,
-            "eb": Keys.Eb,
-            "e": Keys.E,
-            "f": Keys.F,
-            "gb": Keys.Gb,
-            "g": Keys.G,
-            "ab" : Keys.Ab
-        ]
-            
         
-        return keyDict[value]
+        let allCases = Keys.allCases
+        
+        return allCases.first { key in
+            return key.stringValue == value
+        }
     }
 }

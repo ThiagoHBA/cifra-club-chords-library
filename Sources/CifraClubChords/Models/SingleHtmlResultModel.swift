@@ -8,7 +8,8 @@
 import Foundation
 import SwiftSoup
 
-class SingleHtmlResult : HtmlResultFactory {
+
+class SingleHtmlResult {
     var link: URL
     
     init(link: URL) {
