@@ -76,9 +76,9 @@ public class Chords {
         var modifiedUrl : String = urlString + "#"
         
         if self.key != nil {
-            let key : Keys? = Keys.stringToKey(value: self.key!)
-            
-            modifiedUrl += "key=\(key!.rawValue)"
+            if let key : Keys = Keys.stringToKey(value: self.key!.lowercased()) {
+                modifiedUrl += "key=\(key.rawValue)"
+            }
         }
 
         return modifiedUrl + "&footerChords=\(self.footerChords)&tabs=\(self.tabs)"

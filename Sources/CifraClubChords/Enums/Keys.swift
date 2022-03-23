@@ -19,6 +19,7 @@ enum Keys : Int {
     case F = 8
     case Gb = 9
     case G = 10
+    case Ab = 11
     
     static func stringToKey(value: String) -> Keys? {
         let keyDict = [
@@ -32,7 +33,8 @@ enum Keys : Int {
             "e": Keys.E,
             "f": Keys.F,
             "gb": Keys.Gb,
-            "g": Keys.G
+            "g": Keys.G,
+            "ab" : Keys.Ab
         ]
             
         
