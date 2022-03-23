@@ -18,8 +18,7 @@ class ChordsTest: XCTestCase {
         chordsClass = Chords(
             musicName: "madonna",
             tabs : false,
-            twoColumns: true,
-            bodyDiagrams: true,
+            key: "c",
             footerChords: true
         )
     }
