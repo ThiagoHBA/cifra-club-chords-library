@@ -24,9 +24,10 @@ class HtmlResultModel {
             for singleResult in resultHtml {
                 resultList.append(try SingleHtmlResult.fromHtml(singleResult))
             }
+            return HtmlResultModel(listSingleHtmlResults: resultList)
         }
         
-        return HtmlResultModel(listSingleHtmlResults: resultList)
+        throw URLException.contentNotFound
     }
 }
 

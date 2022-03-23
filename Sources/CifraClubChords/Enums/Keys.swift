@@ -44,7 +44,7 @@ enum Keys : Int, CaseIterable {
         case .Gb:
             return "gb"
         case .G:
-            return "b"
+            return "g"
         case .Ab:
             return "ab"
         }
