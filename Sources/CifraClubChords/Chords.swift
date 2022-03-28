@@ -34,6 +34,21 @@ public class Chords {
     func handleMusicUrl(_ htmlData: String) {
         do {
             let firstResultUrl = try self.getFirstResultCifraClub(document: SwiftSoup.parse(htmlData))
+            
+            let urlInfo =
+            """
+                ✅ Url encontrada com sucesso.
+                
+                Dados:
+                    - Nome: \(musicName)
+                    - Tablaturas: \(tabs ? "Ativado" : "Desativado")
+                    - Tom: \(key ?? "Original")
+                    - Diagramas no fim da cifra: \(footerChords ? "Ativado" : "Desativado")
+                    - Url: \(firstResultUrl!)
+            """
+            print(urlInfo)
+            sleep(1)
+            
             NSWorkspace.shared.open(URL(string: self.addURLParameters(urlString: firstResultUrl!))!)
         } catch ResultException.emptyResult {
             print("\n⚠️ Nenhum resultado para a música \(self.musicName) foi encontrado.")
