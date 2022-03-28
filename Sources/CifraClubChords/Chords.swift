@@ -33,7 +33,9 @@ public class Chords {
     
     func handleMusicUrl(_ htmlData: String) {
         do {
-            let firstResultUrl = try self.getFirstResultCifraClub(document: SwiftSoup.parse(htmlData))
+            guard let firstResultUrl = try? self.getFirstResultCifraClub(document: SwiftSoup.parse(htmlData)) else {
+                throw ResultException.emptyResult
+            }
             
             let urlInfo =
             """
@@ -44,12 +46,13 @@ public class Chords {
                     - Tablaturas: \(tabs ? "Ativado" : "Desativado")
                     - Tom: \(key ?? "Original")
                     - Diagramas no fim da cifra: \(footerChords ? "Ativado" : "Desativado")
-                    - Url: \(firstResultUrl!)
+                    - Url: \(firstResultUrl)
             """
+            
             print(urlInfo)
             sleep(1)
             
-            NSWorkspace.shared.open(URL(string: self.addURLParameters(urlString: firstResultUrl!))!)
+            NSWorkspace.shared.open(URL(string: self.addURLParameters(urlString: firstResultUrl))!)
         } catch ResultException.emptyResult {
             print("\n⚠️ Nenhum resultado para a música \(self.musicName) foi encontrado.")
         } catch {
@@ -73,6 +76,10 @@ public class Chords {
         var resultIndex: Int = 0
         let htmlResults : HtmlResultModel = try HtmlResultModel.fromHtml(document)
         
+        if htmlResults.listSingleHtmlResults.isEmpty {
+            throw ResultException.emptyResult
+        }
+        
         while htmlResults.listSingleHtmlResults.count > resultIndex {
             let actualResult : SingleHtmlResult = htmlResults.listSingleHtmlResults[resultIndex]
             let resultContent = try String(contentsOf: actualResult.link)
@@ -89,7 +96,7 @@ public class Chords {
             return (try? urlDocument.getElementsByClass("cifra_cnt g-fix cifra-mono").first()) != nil
         }
         
-        throw ResultException.emptyResult
+        return nil
     }
     
     func obtainMusicSearchUrl(musicName: String) -> String {
