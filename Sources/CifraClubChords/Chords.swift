@@ -26,6 +26,8 @@ public class Chords {
                 let firstResultUrl = try! self.getFirstResultCifraClub(
                     document: SwiftSoup.parse(htmlData!)
                 )!
+                
+                print("Result URL: \(firstResultUrl)")
             
                 NSWorkspace.shared.open(URL(string: self.addURLParameters(urlString: firstResultUrl))!)
 
@@ -73,7 +75,9 @@ public class Chords {
     }
     
     func addURLParameters(urlString: String) -> String {
-        var modifiedUrl : String = urlString + "#"
+        var modifiedUrl = urlString.replacingOccurrences(of: ".html", with: "")
+        
+        modifiedUrl += "/imprimir.html#"
         
         if self.key != nil {
             if let key : Keys = Keys.stringToKey(value: self.key!.lowercased()) {
@@ -81,7 +85,7 @@ public class Chords {
             }
         }
 
-        return modifiedUrl + "&footerChords=\(self.footerChords)&tabs=\(self.tabs)"
+        return modifiedUrl + "&instrument=guitar&footerChords=\(self.footerChords)&tabs=\(self.tabs)"
     }
     
     func validateSong(urlContent: String) -> Bool {

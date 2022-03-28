@@ -37,11 +37,15 @@ class ChordsTest: XCTestCase {
     }
     
     func test_urlParameters_toBeValid () {
-        XCTAssertEqual(urlWithParams, "\(urlString!)#key=11&footerChords=true&tabs=false")
+        let validUrl = "https://www.cifraclub.com.br/the-beatles/across-the-universe/"
+        
+        urlWithParams = chordsClass.addURLParameters(urlString: validUrl)
+        
+        XCTAssertEqual(urlWithParams, "\(validUrl)/imprimir.html#key=11&instrument=guitar&footerChords=true&tabs=false")
     }
     
     func test_urlParameters_toBeInvalid () {
-        let invalidUrl =  "\(urlString!)#&footerChords=true&tabs=false"
+        let invalidUrl =  "\(urlString!)/imprimir.html#&instrument=guitar&footerChords=true&tabs=false"
         
         chordsClass.key = "11"
         
@@ -55,6 +59,7 @@ class ChordsTest: XCTestCase {
         
         XCTAssertEqual(urlWithParams, invalidUrl)
     }
+
     
 //    func test_chordsResultFinder_toBeTheFirstResult() {
 //        let resultUrl = chordsClass.validateSong(urlContent: "")

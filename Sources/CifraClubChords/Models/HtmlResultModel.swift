@@ -9,7 +9,7 @@ import Foundation
 import SwiftSoup
 
 
-class HtmlResultModel {
+struct HtmlResultModel {
     var listSingleHtmlResults : [SingleHtmlResult]
     
     init(listSingleHtmlResults: [SingleHtmlResult]){
