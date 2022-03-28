@@ -85,7 +85,7 @@ public class Chords {
             }
         }
 
-        return modifiedUrl + "&footerChords=\(self.footerChords)&tabs=\(self.tabs)"
+        return modifiedUrl + "&instrument=guitar&footerChords=\(self.footerChords)&tabs=\(self.tabs)"
     }
     
     func validateSong(urlContent: String) -> Bool {

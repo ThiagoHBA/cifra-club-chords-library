@@ -41,11 +41,11 @@ class ChordsTest: XCTestCase {
         
         urlWithParams = chordsClass.addURLParameters(urlString: validUrl)
         
-        XCTAssertEqual(urlWithParams, "\(validUrl)/imprimir.html#key=11&footerChords=true&tabs=false")
+        XCTAssertEqual(urlWithParams, "\(validUrl)/imprimir.html#key=11&instrument=guitar&footerChords=true&tabs=false")
     }
     
     func test_urlParameters_toBeInvalid () {
-        let invalidUrl =  "\(urlString!)/imprimir.html#&footerChords=true&tabs=false"
+        let invalidUrl =  "\(urlString!)/imprimir.html#&instrument=guitar&footerChords=true&tabs=false"
         
         chordsClass.key = "11"
         
