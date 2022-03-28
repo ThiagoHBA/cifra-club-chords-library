@@ -23,10 +23,8 @@ public class Chords {
             (success, htmlData) in
             if success {
                 self.handleMusicUrl(htmlData!)
-                
                 exit(0)
             }
-            
             print("\n❌ Não foi possível efetuar a busca. Verifique sua conexão e tente novamente.")
         })
     }
@@ -39,6 +37,7 @@ public class Chords {
             
             let urlInfo =
             """
+            
                 ✅ Url encontrada com sucesso.
                 
                 Dados:
@@ -47,6 +46,7 @@ public class Chords {
                     - Tom: \(key ?? "Original")
                     - Diagramas no fim da cifra: \(footerChords ? "Ativado" : "Desativado")
                     - Url: \(firstResultUrl)
+            
             """
             
             print(urlInfo)
