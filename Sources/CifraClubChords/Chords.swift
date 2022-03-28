@@ -19,18 +19,16 @@ public class Chords {
     }
     
     public func searchMusic() {
-        do {
-            try obtainHtmlData(url: obtainMusicSearchUrl(musicName: self.musicName), completion: {
-                (success, htmlData) in
-                if success {
-                    self.handleMusicUrl(htmlData!)
-                    
-                    exit(0)
-                }
-            })
-        } catch {
+        obtainHtmlData(url: obtainMusicSearchUrl(musicName: self.musicName), completion: {
+            (success, htmlData) in
+            if success {
+                self.handleMusicUrl(htmlData!)
+                
+                exit(0)
+            }
+            
             print("\n❌ Não foi possível efetuar a busca. Verifique sua conexão e tente novamente.")
-        }
+        })
     }
     
     func handleMusicUrl(_ htmlData: String) {
@@ -43,8 +41,8 @@ public class Chords {
             print("\n⚠️ Não foi possível acessar o conteúdo da cifra. Utilize o comando --help para dicas de utilização.")
         }
     }
-
-    func obtainHtmlData(url: String, completion: @escaping (Bool, String?) -> Void) throws {
+    
+    func obtainHtmlData(url: String, completion: @escaping (Bool, String?) -> Void) {
         if let searchUrl = URL(string: url) {
             Erik.visit(url: searchUrl) { object, error in
                 if let e = error {
@@ -54,10 +52,8 @@ public class Chords {
                 }
             }
         }
-        
-        throw URLException.invalid
     }
-
+    
     func getFirstResultCifraClub(document: SwiftSoup.Document) throws -> String? {
         var resultIndex: Int = 0
         let htmlResults : HtmlResultModel = try HtmlResultModel.fromHtml(document)
@@ -72,10 +68,15 @@ public class Chords {
             
             resultIndex += 1
         }
-
+        
+        func validateSong(urlContent: String) -> Bool {
+            let urlDocument : SwiftSoup.Document = try! SwiftSoup.parse(urlContent)
+            return (try? urlDocument.getElementsByClass("cifra_cnt g-fix cifra-mono").first()) != nil
+        }
+        
         throw ResultException.emptyResult
     }
-
+    
     func obtainMusicSearchUrl(musicName: String) -> String {
         
         func formatStringToUrlFormat(stringUrl: String) -> String {
@@ -95,12 +96,7 @@ public class Chords {
                 modifiedUrl += "key=\(key.rawValue)"
             }
         }
-
+        
         return modifiedUrl + "&instrument=guitar&footerChords=\(self.footerChords)&tabs=\(self.tabs)"
-    }
-    
-    func validateSong(urlContent: String) -> Bool {
-        let urlDocument : SwiftSoup.Document = try! SwiftSoup.parse(urlContent)
-        return (try? urlDocument.getElementsByClass("cifra_cnt g-fix cifra-mono").first()) != nil
     }
 }
