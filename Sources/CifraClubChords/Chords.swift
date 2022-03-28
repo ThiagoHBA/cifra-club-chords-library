@@ -19,32 +19,43 @@ public class Chords {
     }
     
     public func searchMusic() {
-        obtainHtmlData(url: obtainMusicSearchUrl(musicName: self.musicName), completion: {
-            (success, htmlData) in
-            if success {
-
-                let firstResultUrl = try! self.getFirstResultCifraClub(
-                    document: SwiftSoup.parse(htmlData!)
-                )!
-                
-                print("Result URL: \(firstResultUrl)")
-            
-                NSWorkspace.shared.open(URL(string: self.addURLParameters(urlString: firstResultUrl))!)
-
-                exit(0)
-            }
-        })
+        do {
+            try obtainHtmlData(url: obtainMusicSearchUrl(musicName: self.musicName), completion: {
+                (success, htmlData) in
+                if success {
+                    self.handleMusicUrl(htmlData!)
+                    
+                    exit(0)
+                }
+            })
+        } catch {
+            print("\n❌ Não foi possível efetuar a busca. Verifique sua conexão e tente novamente.")
+        }
+    }
+    
+    func handleMusicUrl(_ htmlData: String) {
+        do {
+            let firstResultUrl = try self.getFirstResultCifraClub(document: SwiftSoup.parse(htmlData))
+            NSWorkspace.shared.open(URL(string: self.addURLParameters(urlString: firstResultUrl!))!)
+        } catch ResultException.emptyResult {
+            print("\n⚠️ Nenhum resultado para a música \(self.musicName) foi encontrado.")
+        } catch {
+            print("\n⚠️ Não foi possível acessar o conteúdo da cifra. Utilize o comando --help para dicas de utilização.")
+        }
     }
 
-
-    func obtainHtmlData(url: String, completion: @escaping (Bool, String?) -> Void) {
-        Erik.visit(url: URL(string: url)!) { object, error in
-            if let e = error {
-                completion(false, String(describing: e))
-            } else if let doc = object {
-                completion(true, String(describing: doc))
+    func obtainHtmlData(url: String, completion: @escaping (Bool, String?) -> Void) throws {
+        if let searchUrl = URL(string: url) {
+            Erik.visit(url: searchUrl) { object, error in
+                if let e = error {
+                    completion(false, String(describing: e))
+                } else if let doc = object {
+                    completion(true, String(describing: doc))
+                }
             }
         }
+        
+        throw URLException.invalid
     }
 
     func getFirstResultCifraClub(document: SwiftSoup.Document) throws -> String? {
@@ -62,7 +73,7 @@ public class Chords {
             resultIndex += 1
         }
 
-        return nil
+        throw ResultException.emptyResult
     }
 
     func obtainMusicSearchUrl(musicName: String) -> String {
