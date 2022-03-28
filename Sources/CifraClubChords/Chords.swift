@@ -75,10 +75,9 @@ public class Chords {
     }
     
     func addURLParameters(urlString: String) -> String {
-        if urlString.contains("pgkwt.html"){
-            urlString.replacingOccurrences(of: "pgkwt.html", with: "imprimir.html/", options: .literal)
-        }
-        var modifiedUrl : String = urlString + "#"
+        var modifiedUrl = urlString.replacingOccurrences(of: "/pgkwt.html", with: "")
+        
+        modifiedUrl += "/imprimir.html#"
         
         if self.key != nil {
             if let key : Keys = Keys.stringToKey(value: self.key!.lowercased()) {
