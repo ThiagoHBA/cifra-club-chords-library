@@ -75,7 +75,7 @@ public class Chords {
     }
     
     func addURLParameters(urlString: String) -> String {
-        var modifiedUrl = urlString.replacingOccurrences(of: "/pgkwt.html", with: "")
+        var modifiedUrl = urlString.replacingOccurrences(of: "/.html", with: "")
         
         modifiedUrl += "/imprimir.html#"
         
