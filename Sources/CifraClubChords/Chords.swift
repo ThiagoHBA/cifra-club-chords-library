@@ -26,6 +26,8 @@ public class Chords {
                 let firstResultUrl = try! self.getFirstResultCifraClub(
                     document: SwiftSoup.parse(htmlData!)
                 )!
+                
+                print("Result URL: \(firstResultUrl)")
             
                 NSWorkspace.shared.open(URL(string: self.addURLParameters(urlString: firstResultUrl))!)
 
