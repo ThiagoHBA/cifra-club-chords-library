@@ -9,7 +9,7 @@ import Foundation
 import SwiftSoup
 
 
-class SingleHtmlResult {
+struct SingleHtmlResult {
     var link: URL
     
     init(link: URL) {
