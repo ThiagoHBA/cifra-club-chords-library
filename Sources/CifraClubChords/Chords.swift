@@ -73,7 +73,7 @@ public class Chords {
     }
     
     func addURLParameters(urlString: String) -> String {
-        var modifiedUrl : String = urlString + "#"
+        var modifiedUrl : String = urlString + "/imprimir.html#"
         
         if self.key != nil {
             if let key : Keys = Keys.stringToKey(value: self.key!.lowercased()) {
