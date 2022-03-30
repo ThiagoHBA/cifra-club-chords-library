@@ -3,7 +3,7 @@
 [![SPM compatible](https://img.shields.io/badge/SPM-compatible-4BC51D.svg?style=flat)](https://github.com/apple/swift-package-manager)
 <img src="https://img.shields.io/badge/Swift-FA7343?style=for-the-badge&logo=swift&logoColor=white">
 
-**CifraClubChords** é uma biblioteca que utiliza SPM (Swift Package Manager) feita para facilitar a busca e a edição de cifras no site <a href="https://www.cifraclub.com.br">Cifra Club</a> sua utilização e instalação está exemplificada no pactote executável <a href="https://github.com/ThiagoHBA/sifr">sifr</a>. Esse repositório utiliza a licença `MIT`, sinta-se livre para dar fork e utilizar da forma que quiser.
+**CifraClubChords** é uma biblioteca que utiliza SPM (Swift Package Manager) feita para facilitar a busca e a edição de cifras no site <a href="https://www.cifraclub.com.br">Cifra Club</a>. Sua utilização e instalação está exemplificada no pactote executável <a href="https://github.com/ThiagoHBA/sifr">sifr</a>. Esse repositório utiliza a licença `MIT`, sinta-se livre para dar fork e utilizar da forma que quiser.
 
 ## Como contribuir com esse repositório?
 Para realizar contribuições e reviews de código, utilize a ferremanta de `issues` e `pull requests` e aguarde a aprovação de algum revisor para dar merge do seu código com o código principal.
