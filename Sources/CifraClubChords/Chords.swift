@@ -93,7 +93,14 @@ public class Chords {
         
         func validateSong(urlContent: String) -> Bool {
             let urlDocument : SwiftSoup.Document = try! SwiftSoup.parse(urlContent)
-            return (try? urlDocument.getElementsByClass("cifra_cnt g-fix cifra-mono").first()) != nil
+            let isASong : Bool = (try? urlDocument.getElementsByClass("cifra_cnt g-fix cifra-mono").first()) != nil
+            let isForGuitar: Bool = true
+            
+            let htmlData = try? urlDocument.getElementsByClass("tab_more tab_more--arrow js-modal-trigger").first()
+            
+            print(htmlData)
+            
+            return isASong && isForGuitar
         }
         
         return nil
