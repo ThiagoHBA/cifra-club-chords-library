@@ -19,44 +19,34 @@ public class Chords {
     }
     
     public func searchMusic() {
+        let cli = CLI(chordsClass: self)
+        
+        cli.loading(true)
         obtainHtmlData(url: obtainMusicSearchUrl(musicName: self.musicName), completion: {
             (success, htmlData) in
+            cli.loading(false)
             if success {
-                self.handleMusicUrl(htmlData!)
+                self.handleMusicUrl(htmlData!, cli: cli)
                 exit(0)
             }
-            print("\n❌ Não foi possível efetuar a busca. Verifique sua conexão e tente novamente.")
+            
+            cli.searchErrorMessage()
         })
     }
     
-    func handleMusicUrl(_ htmlData: String) {
+    func handleMusicUrl(_ htmlData: String, cli: CLI) {
         do {
             guard let firstResultUrl = try? self.getFirstResultCifraClub(document: SwiftSoup.parse(htmlData)) else {
                 throw ResultException.emptyResult
             }
             
-            let urlInfo =
-            """
-            
-                ✅ Url encontrada com sucesso.
-                
-                Dados:
-                    - Nome: \(musicName)
-                    - Tablaturas: \(tabs ? "Ativado" : "Desativado")
-                    - Tom: \(key ?? "Original")
-                    - Diagramas no fim da cifra: \(footerChords ? "Ativado" : "Desativado")
-                    - Url: \(firstResultUrl)
-            
-            """
-            
-            print(urlInfo)
+            cli.successMessage(resultUrl: firstResultUrl)
             sleep(1)
-            
             NSWorkspace.shared.open(URL(string: self.addURLParameters(urlString: firstResultUrl))!)
         } catch ResultException.emptyResult {
-            print("\n⚠️ Nenhum resultado para a música \(self.musicName) foi encontrado.")
+            cli.noResultFoundMessage()
         } catch {
-            print("\n⚠️ Não foi possível acessar o conteúdo da cifra. Utilize o comando --help para dicas de utilização.")
+            cli.generalErrorMessage()
         }
     }
     
