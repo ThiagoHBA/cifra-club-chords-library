@@ -17,11 +17,11 @@ class ChordsTest: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        urlString = "https://www.cifraclub.com.br/madonna/"
+        urlString = "https://www.cifraclub.com.br/the-beatles/all-my-loving/"
         chordsClass = Chords(
-            musicName: "madonna",
+            musicName: "All My Loving",
             tabs : false,
-            key: "AB",
+            key: "A",
             footerChords: true
         )
         urlWithParams = chordsClass.addURLParameters(urlString: urlString)
@@ -31,7 +31,7 @@ class ChordsTest: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     func test_chordsResultFind_toBeAMusic() {
-        let resultUrl = try! chordsClass.getFirstResultCifraClub(document: try! SwiftSoup.parse(Mocks.htmlStringSearchResult))
+        let resultUrl = try! chordsClass.getFirstResultCifraClub(document: try! SwiftSoup.parse(Mocks.obtainSearchResultData()!))
     
         XCTAssertNotEqual(resultUrl, urlString)
     }
@@ -41,7 +41,7 @@ class ChordsTest: XCTestCase {
         
         urlWithParams = chordsClass.addURLParameters(urlString: validUrl)
         
-        XCTAssertEqual(urlWithParams, "\(validUrl)/imprimir.html#key=11&instrument=guitar&footerChords=true&tabs=false")
+        XCTAssertEqual(urlWithParams, "\(validUrl)/imprimir.html#key=0&instrument=guitar&footerChords=true&tabs=false")
     }
     
     func test_urlParameters_toBeInvalid () {
@@ -61,8 +61,9 @@ class ChordsTest: XCTestCase {
     }
 
     
-//    func test_chordsResultFinder_toBeTheFirstResult() {
-//        let resultUrl = chordsClass.validateSong(urlContent: "")
-//    }
+    func test_chordsResultFinder_toBeTheFirstResult() {
+        let searchResut = try! Mocks.obtainSearchResultData()
+        XCTAssertNotNil(searchResut)
+    }
 
 }
