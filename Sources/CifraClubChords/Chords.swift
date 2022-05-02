@@ -95,11 +95,7 @@ public class Chords {
             let urlDocument : SwiftSoup.Document = try! SwiftSoup.parse(urlContent)
             let isASong : Bool = (try? urlDocument.getElementsByClass("cifra_cnt g-fix cifra-mono").first()) != nil
             let isForGuitar: Bool = false
-            
-            let htmlData = try? urlDocument.getElementsByClass("tab_more tab_more--arrow js-modal-trigger").first()
-            
-            print(htmlData)
-            
+        
             return isASong && isForGuitar
         }
         
