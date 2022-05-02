@@ -28,6 +28,10 @@ let package = Package(
             ]),
         .testTarget(
             name: "CifraClubChordsTests",
-            dependencies: ["CifraClubChords"]),
+            dependencies: ["CifraClubChords"],
+            resources: [
+                  .process("Mocks/Data")
+              ]
+        ),
     ]
 )
