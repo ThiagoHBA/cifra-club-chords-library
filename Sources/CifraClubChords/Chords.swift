@@ -21,10 +21,9 @@ public class Chords {
     public func searchMusic() {
         let cli = CLI(chordsClass: self)
         
-        cli.loading(true)
         obtainHtmlData(url: obtainMusicSearchUrl(musicName: self.musicName), completion: {
             (success, htmlData) in
-            cli.loading(false)
+            
             if success {
                 self.handleMusicUrl(htmlData!, cli: cli)
                 exit(0)
